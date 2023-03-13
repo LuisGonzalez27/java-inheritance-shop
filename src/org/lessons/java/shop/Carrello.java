@@ -1,51 +1,58 @@
 package org.lessons.java.shop;
 
 import java.util.Scanner;
+import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class Carrello {
     public static void main(String[] args) {
-        System.out.println("Benvenuto nel carello");
         Scanner scan = new Scanner(System.in);
-        int itemNumber = 0;
-        Prodotto[] lista = new Prodotto[5];
+        int sceltaOggetto;
+        String nomeProdotto;
+        String descrizione;
+        BigDecimal prezzo;
 
-        boolean addItem=true;
-        do {
+        System.out.println("Benvenuto nel carello");
+        System.out.println("Quanti oggetti vuoi comprare?");
+        int quantita = Integer.parseInt(scan.nextLine());
+        String[] cart = new String[quantita];
 
-            System.out.println("Che prodotto vuoi aggiungere? 1-Smartphone, 2-Televisore, 3-Cuffie o digita \"0\" per Uscire");
-            String option= scan.nextLine();
+        for(int i = 0; i < quantita; i++){
+            System.out.println("Che prodotto vuoi aggiungere? 1-Smartphone, 2-Televisore, 3-Cuffie");
+            sceltaOggetto = Integer.parseInt(scan.nextLine());
+            if (sceltaOggetto == 1){
+                System.out.println("Inserisci nome prodotto");
+                nomeProdotto = scan.nextLine();
+                System.out.println("Inserisci descrizione prodotto");
+                descrizione = scan.nextLine();
+                System.out.println("Inserisci prezzo prodotto");
+                prezzo = new BigDecimal(scan.nextLine());
+                System.out.println("Inserisci memoria prodotto");
+                int memoria = Integer.parseInt(scan.nextLine());
+                Smartphone smartphone = new Smartphone(nomeProdotto, descrizione ,prezzo,memoria);
+                cart[i] = String.valueOf(smartphone);
+            } else if (sceltaOggetto == 2){
+                System.out.println("Inserisci nome prodotto");
+                nomeProdotto = scan.nextLine();
+                System.out.println("Inserisci descrizione prodotto");
+                descrizione = scan.nextLine();
+                System.out.println("Inserisci prezzo prodotto");
+                prezzo = new BigDecimal(scan.nextLine());
+                System.out.println("Inserisci dimensione prodotto");
+                int dimensione = Integer.parseInt(scan.nextLine());
+                System.out.println("Inserisci se è smart o no ?");
+                boolean smartOrNot = scan.nextLine().equalsIgnoreCase("Si") ? true : false;
+                Televisori televisori = new Televisori(nomeProdotto, descrizione ,prezzo, dimensione, smartOrNot);
+                cart[i] = String.valueOf(televisori);
 
-            switch (option.toLowerCase()) {
-                case "1" -> {
-                    System.out.println("Inserisci nome prodotto");
-                    String nome = scan.nextLine();
-                    System.out.println("Inserisci descrizione prodotto");
-                    String descrizione = scan.nextLine();
-                    System.out.println("Inserisci prezzo prodotto");
-                    double prezzo = Double.parseDouble(scan.nextLine());
-                    System.out.println("Inserisci iva prodotto");
-                    double iva = Double.parseDouble(scan.nextLine());
-                    System.out.println("Inserisci imei prodotto");
-                    String imei = scan.nextLine();
-                    System.out.println("Inserisci memoria prodotto");
-                    int memoria = Integer.parseInt(scan.nextLine());
-                    Smartphone nuovoSmart = new Smartphone(nome, descrizione, prezzo, iva, imei, memoria);
-                    lista[itemNumber] = nuovoSmart;
-                    itemNumber++;
-                }
-                case "2" -> System.out.println("Inserisci nome prodotto");
-                case "3" -> System.out.println("Inserisci nome prodotto");
-                case "0" -> {
-                    System.out.println("Grazie per aver aggiunto prodotti al carrello");
-                    addItem = false;
-                }
-                default -> System.out.println("Comando non riconosciuto");
+            } else if (sceltaOggetto == 3){
+                System.out.println("Inserisci nome prodotto");
+
+            } else {
+                System.out.println("Comando non riconosciuto, riprova");
             }
-        } while (addItem &&(itemNumber< lista.length));
-
-        System.out.println("Ecco il carello: ");
-        for (int i=0;i<itemNumber;i++) {
-            System.out.println(lista[i].toString());
         }
+        scan.close();
+        System.out.println(Arrays.toString(cart));
     }
 }

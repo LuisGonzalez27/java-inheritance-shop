@@ -1,29 +1,23 @@
 package org.lessons.java.shop;
 
 import java.util.Random;
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Prodotto {
     //attributes
     private int codice;
     private String nome;
     private String descrizione;
-    private double prezzo;
-    private double iva;
+    private BigDecimal prezzo;
+    private BigDecimal iva = BigDecimal.valueOf(0.22);
 
-    public Prodotto(int codice, String nome, String descrizione, double prezzo, double iva) {
+    public Prodotto(String nome, String descrizione, BigDecimal prezzo) {
+        Random rand = new Random();
+        this.codice = rand.nextInt(1,1000);
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
-        this.iva = iva;
-        this.codice = codice;
-    }
-    public Prodotto(String nome, String descrizione, double prezzo, double iva) {
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.prezzo = prezzo;
-        this.iva = iva;
-        this.codice = Integer.parseInt(getId());
     }
 
     public String getNome() {
@@ -38,48 +32,32 @@ public class Prodotto {
         this.nome = nome;
     }
 
-    public String getdescrizione() {
+    public String getDescrizione() {
         return descrizione;
     }
 
-    public void setdescrizione(String marca) {
-        this.descrizione = marca;
+    public void setdescrizione(String descrizione) {
+        this.descrizione = descrizione;
     }
 
-    public double getPrezzo() {
+    public BigDecimal getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(double prezzo) {
+    public void setPrezzo(BigDecimal prezzo) {
         this.prezzo = prezzo;
     }
 
-    public double getIva() {
+    public BigDecimal getIva() {
         return iva;
     }
 
-    public void setIva(double iva) {
-        this.iva = iva;
-    }
-
-    public String prezzoFormattato() {
-        DecimalFormat df = new DecimalFormat("0.00 EUR");
-        double prezzoFinale = prezzo+((prezzo/100)*iva);
-        return df.format(prezzoFinale);
-    }
-
-    protected static String getId() {
-
-        String idString ="";
-        Random rn = new Random();
-        for (int i = 0;i<5;i++) {
-            idString += rn.nextInt(10);
-        }
-        return idString;
+    public BigDecimal getPrezzoIva(){
+        return prezzo.add(prezzo.multiply(iva).setScale(2, RoundingMode.HALF_EVEN));
     }
 
     @Override
     public String toString() {
-        return "Prodotto :"+ codice + ", Nome: " + nome + ", Descrizione: " + descrizione +", Prezzo :" + prezzoFormattato();
+        return "Prodotto :"+ codice + ", Nome: " + nome + ", Descrizione: " + descrizione +", Prezzo: " + prezzo + ", IVA: " + iva + ", Prezzo con IVA:" + getPrezzoIva();
     }
 }
