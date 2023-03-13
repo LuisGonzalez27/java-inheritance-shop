@@ -41,12 +41,23 @@ public class Carrello {
                 System.out.println("Inserisci dimensione prodotto");
                 int dimensione = Integer.parseInt(scan.nextLine());
                 System.out.println("Inserisci se è smart o no ?");
-                boolean smartOrNot = scan.nextLine().equalsIgnoreCase("Si") ? true : false;
+                boolean smartOrNot = scan.nextLine().equalsIgnoreCase("si");
                 Televisori televisori = new Televisori(nomeProdotto, descrizione ,prezzo, dimensione, smartOrNot);
                 cart[i] = String.valueOf(televisori);
 
             } else if (sceltaOggetto == 3){
                 System.out.println("Inserisci nome prodotto");
+                nomeProdotto = scan.nextLine();
+                System.out.println("Inserisci descrizione prodotto");
+                descrizione = scan.nextLine();
+                System.out.println("Inserisci prezzo prodotto");
+                prezzo = new BigDecimal(scan.nextLine());
+                System.out.println("Inserisci colore");
+                String colore = scan.nextLine();
+                System.out.println("Inserisci se sono wireles ?");
+                boolean wirelessOrNot = scan.nextLine().equalsIgnoreCase("si");
+                Cuffie cuffie = new Cuffie(nomeProdotto, descrizione, prezzo, colore, wirelessOrNot);
+                cart[i] = String.valueOf(cuffie);
 
             } else {
                 System.out.println("Comando non riconosciuto, riprova");
